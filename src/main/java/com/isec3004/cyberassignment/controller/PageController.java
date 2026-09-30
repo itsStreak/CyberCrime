@@ -63,7 +63,7 @@ public class PageController {
 
     @GetMapping("/documents/download")
     public ResponseEntity<InputStreamResource> downloadDocument(@RequestParam String file) throws IOException {
-        File document = new File("src/main/resources/documents/" + file);
+        File document = new File("src/main/resources/documents/" + file);   // this is the path to the document folder in the project - the vulnerability is that the user can specify any file path, including sensitive files outside the intended directory
 
         return ResponseEntity.ok()
                 .contentType(MediaType.TEXT_PLAIN)
