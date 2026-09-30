@@ -5,6 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 @Controller
 public class PageController {
@@ -53,5 +59,14 @@ public class PageController {
         redirectAttributes.addFlashAttribute("message",
                 "Thanks, " + name + ". Your message has been received.");
         return "redirect:/contact";
+    }
+
+    @GetMapping("/documents/download")
+    public ResponseEntity<InputStreamResource> downloadDocument(@RequestParam String file) throws IOException {
+        File document = new File("src/main/resources/documents/" + file);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(new InputStreamResource(new FileInputStream(document)));
     }
 }
