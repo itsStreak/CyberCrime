@@ -17,6 +17,15 @@ The current version is the normal website shell. Assignment-specific vulnerable 
 - Java 21
 - Maven
 
+## Exploits 
+### Path Traversal 
+http://localhost:8080/documents/download?file=../outside.txt    -  Accesses document outside of wanted documents 
+
+Vulnerable Java Line:
+```
+File document = new File("src/main/resources/documents/" + file);
+```
+
 ## Run
 
 ```bash
