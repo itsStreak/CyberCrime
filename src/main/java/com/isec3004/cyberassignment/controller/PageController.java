@@ -45,7 +45,7 @@ public class PageController {
                               RedirectAttributes redirectAttributes) {
 
         // Normal application event only.
-        logger.info("Login form submitted for username: " + username); // Made more unsafe for log injection testing
+        logger.info("Login form submitted for username: " + username); // Made more unsafe for log injection testing by concatenating user input directly into the log message and not sanitizing it.
 
 
         redirectAttributes.addFlashAttribute(
