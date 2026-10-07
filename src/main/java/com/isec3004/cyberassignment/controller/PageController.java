@@ -45,7 +45,7 @@ public class PageController {
                               RedirectAttributes redirectAttributes) {
 
         // Normal application event only.
-        logger.info("Login form submitted");
+        logger.info("Login form submitted for username: " + username); // Made more unsafe for log injection testing
 
 
         redirectAttributes.addFlashAttribute(
@@ -68,7 +68,7 @@ public class PageController {
                                 @RequestParam String message,
                                 RedirectAttributes redirectAttributes) {
 
-        logger.info("Contact form submitted");
+        logger.info("Contact form submitted, name: " + name + ", email: " + email + ", message: " + message); // Also made unsafe for log injection
 
         redirectAttributes.addFlashAttribute(
                 "message",
