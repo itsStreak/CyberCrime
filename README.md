@@ -22,7 +22,7 @@ This version has been made to be vulnerable to log injection, specfically on the
 ```bash
 mvn spring-boot:run
 ```
-
+Then open `http://localhost:8080`.
 ## Test payloads
 As the contact page has a text area, using line breaks in the message field will also display them in the logs.
 
@@ -44,4 +44,4 @@ Changing the username field to:
 
 allows for the same attack to work on the login page.
 
-Then open `http://localhost:8080`.
+
