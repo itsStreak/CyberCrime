@@ -1,3 +1,4 @@
+
 package com.isec3004.cyberassignment.controller;
 
 import org.slf4j.Logger;
@@ -7,7 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 @Controller
 public class PageController {
@@ -44,9 +51,9 @@ public class PageController {
                               @RequestParam String password,
                               RedirectAttributes redirectAttributes) {
 
-        // Normal application event only.
-        logger.info("Login form submitted for username: " + username); // Made more unsafe for log injection testing by concatenating user input directly into the log message and not sanitizing it.
-
+        // Intentionally vulnerable to Log Injection for assignment testing.
+        // User-controlled input is written directly into the log.
+        logger.info("Login form submitted for username: " + username);
 
         redirectAttributes.addFlashAttribute(
                 "message",
@@ -68,7 +75,10 @@ public class PageController {
                                 @RequestParam String message,
                                 RedirectAttributes redirectAttributes) {
 
-        logger.info("Contact form submitted, name: " + name + ", email: " + email + ", message: " + message); // Also made unsafe for log injection
+        // Intentionally vulnerable to Log Injection for assignment testing.
+        logger.info("Contact form submitted, name: " + name
+                + ", email: " + email
+                + ", message: " + message);
 
         redirectAttributes.addFlashAttribute(
                 "message",
@@ -76,5 +86,18 @@ public class PageController {
         );
 
         return "redirect:/contact";
+    }
+
+    @GetMapping("/documents/download")
+    public ResponseEntity<InputStreamResource> downloadDocument(
+            @RequestParam String file) throws IOException {
+
+        // Intentionally vulnerable to Path Traversal for assignment testing.
+        // The user can supply paths such as ../outside.txt.
+        File document = new File("src/main/resources/documents/" + file);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(new InputStreamResource(new FileInputStream(document)));
     }
 }
